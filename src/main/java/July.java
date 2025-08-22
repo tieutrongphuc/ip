@@ -99,7 +99,6 @@ public class July {
             }
 
         }
-
         scanner.close();
         System.out.println("Good bye, I'm always here for you.");
     }
