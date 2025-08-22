@@ -1,7 +1,10 @@
 public enum keywords {
     LIST("list"),
     MARK("mark"),
-    UNMARK("unmark");
+    UNMARK("unmark"),
+    TODO("todo"),
+    DEADLINE("deadline"),
+    EVENT("event");
 
     private final String keyword;
 

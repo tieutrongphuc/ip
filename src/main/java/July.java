@@ -18,7 +18,7 @@ public class July {
                 break;
             }
             String[] splitInput = keywords.parse(input);
-            String description = splitInput[1].trim();
+            String argument = splitInput[1].trim();
             switch (splitInput[0]) {
             case "list":
                 for (int i = 0; i < list.size(); i++) {
@@ -26,20 +26,31 @@ public class July {
                 }
                 break;
             case "mark":
-                int i = Integer.parseInt(description);
+                int i = Integer.parseInt(argument);
                 list.get(i - 1).setDone(true);
                 System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i,list.get(i - 1));
                 break;
             case "unmark":
-                int j = Integer.parseInt(description);
+                int j = Integer.parseInt(argument);
                 list.get(j - 1).setDone(false);
                 System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", j,list.get(j - 1));
                 break;
-            default:
-                System.out.println("added: " + description);
-                list.add(new Task(description));
+            case "todo":
+                list.add(new Todo(argument));
+                System.out.printf("Okie no problem, I've add the given task:%n%s%n",list.get(list.size() - 1));
                 break;
+            case "deadline":
+                list.add(Deadline.process(argument));
+                System.out.printf("Okie no problem, I've added a new deadline:%n%s%n",list.get(list.size() - 1));
+                break;
+            case "event":
+                list.add(Event.process(argument));
+                System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
+                break;
+            default:
+                System.out.println("Sorry I don't quite understand you :(");
             }
+
         }
 
         scanner.close();
