@@ -80,6 +80,20 @@ public class July {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case "delete":
+                try {
+                    int i = Integer.parseInt(argument);
+                    if (i <= 0 || i > list.size()) {
+                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
+                    } else {
+                        System.out.printf("I've deleted task %d:%n%s%n", i, list.get(i - 1));
+                        list.remove(i - 1);
+                        System.out.printf("You have now %d remaining tasks%n", list.size());
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.printf("Sorry %s is not a valid number%n", argument);
+                }
+                break;
             default:
                 System.out.println("Sorry I don't quite understand you :(");
             }
