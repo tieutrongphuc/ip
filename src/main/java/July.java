@@ -1,28 +1,44 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class July {
     public static void main(String[] args) {
         System.out.println("Hello I'm July, your helpful assistant");
 
+        // Init variables
         Scanner scanner = new Scanner(System.in);
         String input;
-        int listLength = 0;
-        String[] list = new String[105];
+        ArrayList<Task> list = new ArrayList<>();
 
         while (true) {
             input = scanner.nextLine();
+            input = input.trim().replaceAll("\\s+", " ").toLowerCase(); // delete unwanted space and turn lowercase
+
             if (input.equalsIgnoreCase("bye")) {
                 break;
-            } else {
-                if (input.equalsIgnoreCase("list")) {
-                    for (int i = 0; i < listLength; i++) {
-                        System.out.printf("%d.%s%n", i + 1, list[i]);
-                    }
-                } else {
-                    System.out.println("added: " + input);
-                    list[listLength] = input;
-                    listLength++;
+            }
+            String[] splitInput = keywords.parse(input);
+            String description = splitInput[1].trim();
+            switch (splitInput[0]) {
+            case "list":
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.printf("%d.%s%n", i + 1, list.get(i));
                 }
+                break;
+            case "mark":
+                int i = Integer.parseInt(description);
+                list.get(i - 1).setDone(true);
+                System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i,list.get(i - 1));
+                break;
+            case "unmark":
+                int j = Integer.parseInt(description);
+                list.get(j - 1).setDone(false);
+                System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", j,list.get(j - 1));
+                break;
+            default:
+                System.out.println("added: " + description);
+                list.add(new Task(description));
+                break;
             }
         }
 
