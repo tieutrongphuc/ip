@@ -7,8 +7,11 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    public static Deadline process(String argument) {
+    public static Deadline process(String argument) throws InvalidDeadlineException {
         String[] tmp = argument.split("/by", 2);
+        if (tmp.length != 2) {
+            throw new InvalidDeadlineException("You need to have ONE '/by' in deadline command");
+        }
         String description = tmp[0].trim();
         String by = tmp[1].trim();
         return new Deadline(description, by);

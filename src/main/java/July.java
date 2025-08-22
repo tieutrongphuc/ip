@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -19,6 +20,12 @@ public class July {
             }
             String[] splitInput = keywords.parse(input);
             String argument = splitInput[1].trim();
+
+            // check if argument is empty
+            if (argument.isEmpty() && !Objects.equals(splitInput[0], "list")) {
+                System.out.println("Can you give the description of the task on one line");
+                continue;
+            }
             switch (splitInput[0]) {
             case "list":
                 for (int i = 0; i < list.size(); i++) {
@@ -26,26 +33,52 @@ public class July {
                 }
                 break;
             case "mark":
-                int i = Integer.parseInt(argument);
-                list.get(i - 1).setDone(true);
-                System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i,list.get(i - 1));
+                try {
+                    int i = Integer.parseInt(argument);
+                    if (i <= 0 || i > list.size()) {
+                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
+                    } else {
+                        list.get(i - 1).setDone(true);
+                        System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i, list.get(i - 1));
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.printf("Sorry %s is not a valid number%n", argument);
+                }
                 break;
             case "unmark":
-                int j = Integer.parseInt(argument);
-                list.get(j - 1).setDone(false);
-                System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", j,list.get(j - 1));
+                try {
+                    int i = Integer.parseInt(argument);
+                    if (i <= 0 || i > list.size()) {
+                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
+                    } else {
+                        list.get(i - 1).setDone(false);
+                        System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", i, list.get(i - 1));
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.printf("Sorry %s is not a valid number%n", argument);
+                }
                 break;
             case "todo":
                 list.add(new Todo(argument));
                 System.out.printf("Okie no problem, I've add the given task:%n%s%n",list.get(list.size() - 1));
                 break;
             case "deadline":
-                list.add(Deadline.process(argument));
-                System.out.printf("Okie no problem, I've added a new deadline:%n%s%n",list.get(list.size() - 1));
+                try {
+                    Deadline tmp = Deadline.process(argument);
+                    list.add(tmp);
+                    System.out.printf("Okie no problem, I've added a new deadline:%n%s%n",list.get(list.size() - 1));
+                } catch (InvalidDeadlineException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "event":
-                list.add(Event.process(argument));
-                System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
+                try {
+                    Event tmp = Event.process(argument);
+                    list.add(Event.process(argument));
+                    System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
+                } catch (InvalidEventException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             default:
                 System.out.println("Sorry I don't quite understand you :(");
