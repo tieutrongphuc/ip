@@ -1,6 +1,7 @@
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
+import July.datetime.StringTime;
 import July.error.InvalidEventException;
 import July.tasks.Deadline;
 import July.tasks.Event;
@@ -35,6 +36,19 @@ public class July {
                 continue;
             }
             switch (splitInput[0]) {
+            case "check":
+                StringTime temp = new StringTime(argument);
+                if (temp.isString()) {
+                    System.out.println("Please give a valid date: example dd/mm/yyyy");
+                    continue;
+                }
+                System.out.printf("Okay let me check if you have any task not done yet on %s%n", temp);
+                for (int i = 0; i < list.size(); i++) {
+                    if(list.get(i).check(temp)) {
+                        System.out.println(list.get(i));
+                    }
+                }
+                break;
             case "list":
                 System.out.printf("You currently have %d task in your list%n", list.size());
                 for (int i = 0; i < list.size(); i++) {

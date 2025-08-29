@@ -1,5 +1,7 @@
 package July.tasks;
 
+import July.datetime.StringTime;
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -12,5 +14,9 @@ public class Todo extends Task {
 
     public String toSave() {
         return String.format("T %s %s", super.isDone ? "1" : "0", super.description);
+    }
+
+    public boolean check(StringTime o) {
+        return !super.isDone;
     }
 }
