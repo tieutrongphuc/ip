@@ -74,7 +74,7 @@ public class July {
             case "event":
                 try {
                     Event tmp = Event.process(argument);
-                    list.add(Event.process(argument));
+                    list.add(tmp);
                     System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
                 } catch (InvalidEventException e) {
                     System.out.println(e.getMessage());
