@@ -1,3 +1,7 @@
+package July.tasks;
+
+import July.error.InvalidEventException;
+
 public class Event extends Task {
 
     protected String from, to;
@@ -23,5 +27,9 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (From: " + from + " to: " + to +")";
+    }
+
+    public String toSave() {
+        return String.format("E %s %s /from %s /to %s", super.isDone ? "1" : "0", super.description, this.from, this.to);
     }
 }

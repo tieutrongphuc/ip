@@ -1,3 +1,7 @@
+package July.tasks;
+
+import July.error.InvalidDeadlineException;
+
 public class Deadline extends Task {
 
     protected String by;
@@ -21,4 +25,9 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    public String toSave() {
+        return String.format("D %s %s /by %s", super.isDone ? "1" : "0", super.description, this.by);
+    }
+
 }
