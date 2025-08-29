@@ -1,5 +1,7 @@
 package July.tasks;
 
+import July.datetime.StringTime;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -24,5 +26,8 @@ public class Task {
 
     public String toSave() {
         return "";
+    }
+    public boolean check(StringTime o) {
+        return false;
     }
 }

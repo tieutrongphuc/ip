@@ -1,15 +1,16 @@
 package July.tasks;
 
+import July.datetime.StringTime;
 import July.error.InvalidEventException;
 
 public class Event extends Task {
 
-    protected String from, to;
+    protected StringTime from, to;
 
     public Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = new StringTime(from);
+        this.to = new StringTime(to);
     }
 
     public static Event process(String argument) throws InvalidEventException {
@@ -31,5 +32,12 @@ public class Event extends Task {
 
     public String toSave() {
         return String.format("E %s %s /from %s /to %s", super.isDone ? "1" : "0", super.description, this.from, this.to);
+    }
+
+    public boolean check(StringTime o) {
+        if (from.isString() || to.isString() || o.isString()) {
+            return false;
+        }
+        return from.compareTo(o) < 0 && to.compareTo(o) > 0;
     }
 }
