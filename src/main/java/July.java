@@ -1,15 +1,23 @@
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
+import July.error.InvalidEventException;
+import July.tasks.Deadline;
+import July.tasks.Event;
+import July.error.InvalidDeadlineException;
+import July.tasks.Task;
+import July.tasks.Todo;
+import July.data.Storage;
 
 public class July {
     public static void main(String[] args) {
         System.out.println("Hello I'm July, your helpful assistant");
+        Storage storage = new Storage("data/savefile.txt");
 
         // Init variables
         Scanner scanner = new Scanner(System.in);
         String input;
-        ArrayList<Task> list = new ArrayList<>();
+        ArrayList<Task> list = storage.load();
 
         while (true) {
             input = scanner.nextLine();
@@ -28,6 +36,7 @@ public class July {
             }
             switch (splitInput[0]) {
             case "list":
+                System.out.printf("You currently have %d task in your list%n", list.size());
                 for (int i = 0; i < list.size(); i++) {
                     System.out.printf("%d.%s%n", i + 1, list.get(i));
                 }
@@ -74,7 +83,7 @@ public class July {
             case "event":
                 try {
                     Event tmp = Event.process(argument);
-                    list.add(Event.process(argument));
+                    list.add(tmp);
                     System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
                 } catch (InvalidEventException e) {
                     System.out.println(e.getMessage());
@@ -97,9 +106,9 @@ public class July {
             default:
                 System.out.println("Sorry I don't quite understand you :(");
             }
-
         }
         scanner.close();
+        storage.save(list);
         System.out.println("Good bye, I'm always here for you.");
     }
 }
