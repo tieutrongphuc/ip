@@ -1,3 +1,5 @@
+package July.tasks;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -18,5 +20,9 @@ public class Task {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public String toSave() {
+        return "";
     }
 }
