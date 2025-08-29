@@ -1,128 +1,39 @@
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.ArrayList;
-import July.datetime.StringTime;
-import July.error.InvalidEventException;
-import July.tasks.Deadline;
-import July.tasks.Event;
-import July.error.InvalidDeadlineException;
-import July.tasks.Task;
-import July.tasks.Todo;
+import July.command.CommandRoute;
+import July.error.JulyException;
 import July.data.Storage;
+import July.tasks.Task;
+import July.ui.Ui;
+import July.command.Command;
 
 public class July {
-    public static void main(String[] args) {
-        System.out.println("Hello I'm July, your helpful assistant");
-        Storage storage = new Storage("data/savefile.txt");
+    private Storage storage;
+    private ArrayList<Task> tasks;
+    private Ui ui;
 
-        // Init variables
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        ArrayList<Task> list = storage.load();
+    public July(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = storage.load();
+    }
 
-        while (true) {
-            input = scanner.nextLine();
-            input = input.trim().replaceAll("\\s+", " ").toLowerCase(); // delete unwanted space and turn lowercase
+    public void run() {
+        ui.greet();
+        boolean isDone = false;
 
-            if (input.equalsIgnoreCase("bye")) {
-                break;
-            }
-            String[] splitInput = keywords.parse(input);
-            String argument = splitInput[1].trim();
-
-            // check if argument is empty
-            if (argument.isEmpty() && !Objects.equals(splitInput[0], "list")) {
-                System.out.println("Can you give the description of the task on one line");
-                continue;
-            }
-            switch (splitInput[0]) {
-            case "check":
-                StringTime temp = new StringTime(argument);
-                if (temp.isString()) {
-                    System.out.println("Please give a valid date: example dd/mm/yyyy");
-                    continue;
-                }
-                System.out.printf("Okay let me check if you have any task not done yet on %s%n", temp);
-                for (int i = 0; i < list.size(); i++) {
-                    if(list.get(i).check(temp)) {
-                        System.out.println(list.get(i));
-                    }
-                }
-                break;
-            case "list":
-                System.out.printf("You currently have %d task in your list%n", list.size());
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.printf("%d.%s%n", i + 1, list.get(i));
-                }
-                break;
-            case "mark":
-                try {
-                    int i = Integer.parseInt(argument);
-                    if (i <= 0 || i > list.size()) {
-                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
-                    } else {
-                        list.get(i - 1).setDone(true);
-                        System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i, list.get(i - 1));
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.printf("Sorry %s is not a valid number%n", argument);
-                }
-                break;
-            case "unmark":
-                try {
-                    int i = Integer.parseInt(argument);
-                    if (i <= 0 || i > list.size()) {
-                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
-                    } else {
-                        list.get(i - 1).setDone(false);
-                        System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", i, list.get(i - 1));
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.printf("Sorry %s is not a valid number%n", argument);
-                }
-                break;
-            case "todo":
-                list.add(new Todo(argument));
-                System.out.printf("Okie no problem, I've add the given task:%n%s%n",list.get(list.size() - 1));
-                break;
-            case "deadline":
-                try {
-                    Deadline tmp = Deadline.process(argument);
-                    list.add(tmp);
-                    System.out.printf("Okie no problem, I've added a new deadline:%n%s%n",list.get(list.size() - 1));
-                } catch (InvalidDeadlineException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-            case "event":
-                try {
-                    Event tmp = Event.process(argument);
-                    list.add(tmp);
-                    System.out.printf("Okie no problem, I've added a new event:%n%s%n",list.get(list.size() - 1));
-                } catch (InvalidEventException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-            case "delete":
-                try {
-                    int i = Integer.parseInt(argument);
-                    if (i <= 0 || i > list.size()) {
-                        System.out.printf("You are giving me an invalid task number: %s%n", argument);
-                    } else {
-                        System.out.printf("I've deleted task %d:%n%s%n", i, list.get(i - 1));
-                        list.remove(i - 1);
-                        System.out.printf("You have now %d remaining tasks%n", list.size());
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.printf("Sorry %s is not a valid number%n", argument);
-                }
-                break;
-            default:
-                System.out.println("Sorry I don't quite understand you :(");
+        while (!isDone) {
+            try {
+                String fullCommand = ui.read();
+                Command c = CommandRoute.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isDone = c.isDone();
+            } catch (JulyException e) {
+                ui.showError(e.getMessage());
             }
         }
-        scanner.close();
-        storage.save(list);
-        System.out.println("Good bye, I'm always here for you.");
+    }
+
+    public static void main(String[] args) {
+        new July("data/savefile.txt").run();
     }
 }

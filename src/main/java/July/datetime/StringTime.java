@@ -65,6 +65,10 @@ public class StringTime {
         return this.dateTime.compareTo(other.dateTime);
     }
 
+    public String toSave() {
+        return input;
+    }
+
     @Override
     public String toString() {
         if (this.dateTime != null) {

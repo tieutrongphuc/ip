@@ -28,7 +28,7 @@ public class Deadline extends Task {
     }
 
     public String toSave() {
-        return String.format("D %s %s /by %s", super.isDone ? "1" : "0", super.description, this.by);
+        return String.format("D %s %s /by %s", super.isDone ? "1" : "0", super.description, this.by.toSave());
     }
 
     public boolean check(StringTime o) {

@@ -31,7 +31,8 @@ public class Event extends Task {
     }
 
     public String toSave() {
-        return String.format("E %s %s /from %s /to %s", super.isDone ? "1" : "0", super.description, this.from, this.to);
+        return String.format("E %s %s /from %s /to %s", super.isDone ? "1" : "0", super.description,
+                this.from.toSave(), this.to.toSave());
     }
 
     public boolean check(StringTime o) {
