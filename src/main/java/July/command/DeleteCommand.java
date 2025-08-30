@@ -6,13 +6,34 @@ import July.ui.Ui;
 import July.data.Storage;
 import July.error.JulyException;
 
+/**
+ * Command to delete a task from the task list by its index number.
+ * This command removes a specified task from the task ArrayList and
+ * provides feedback about the deletion and remaining task count.
+ */
 public class DeleteCommand extends Command {
     private String argument;
 
+    /**
+     * Constructs a DeleteCommand with the specified task number argument.
+     *
+     * @param argument the string representing the task number to delete
+     */
     public DeleteCommand(String argument) {
         this.argument = argument;
     }
 
+    /**
+     * Executes the delete command to remove a task from the task list.
+     * Validates the task number, removes the specified task, and displays
+     * confirmation messages including the deleted task and remaining count.
+     *
+     * @param tasks the ArrayList of tasks from which to delete the specified task
+     * @param ui the user interface component for displaying output
+     * @param storage the storage component for data persistence
+     * @throws JulyException if the argument is not a valid number or if the
+     *                       task number is out of range (less than 1 or greater than task list size)
+     */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
         try {
