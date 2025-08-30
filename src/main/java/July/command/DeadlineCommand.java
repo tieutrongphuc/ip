@@ -8,13 +8,33 @@ import July.data.Storage;
 import July.error.JulyException;
 import July.error.InvalidDeadlineException;
 
+/**
+ * Command to create and add a new deadline task to the task list.
+ * This command processes user input to create a deadline task with a specific
+ * due date and adds it to the current task collection.
+ */
 public class DeadlineCommand extends Command {
     private String argument;
 
+    /**
+     * Constructs a DeadlineCommand with the specified argument string.
+     *
+     * @param argument the string containing the deadline task description and due date
+     */
     public DeadlineCommand(String argument) {
         this.argument = argument;
     }
 
+    /**
+     * Executes the deadline command to create and add a new deadline task.
+     * Processes the argument to create a Deadline object, adds it to the task list,
+     * and displays a confirmation message to the user.
+     *
+     * @param tasks the ArrayList of tasks to add the new deadline to
+     * @param ui the user interface component for displaying output
+     * @param storage the storage component for data persistence
+     * @throws JulyException if the deadline format is invalid or cannot be processed
+     */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
         try {

@@ -7,17 +7,34 @@ import July.tasks.Task;
 import July.ui.Ui;
 import July.command.Command;
 
+/**
+ * Main class for the July task management application.
+ * This class serves as the entry point and orchestrates the interaction between
+ * the user interface, command processing, task management, and data storage components.
+ */
 public class July {
     private Storage storage;
     private ArrayList<Task> tasks;
     private Ui ui;
 
+    /**
+     * Constructs a July application instance with the specified storage file path.
+     * Initializes the user interface, storage system, and loads existing tasks from the file.
+     *
+     * @param filePath the path to the file used for storing task data
+     */
     public July(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = storage.load();
     }
 
+    /**
+     * Runs the main application loop.
+     * Displays the greeting message and continuously processes user commands
+     * until an exit command is received. Handles exceptions by displaying
+     * error messages to the user.
+     */
     public void run() {
         ui.greet();
         boolean isDone = false;
@@ -34,6 +51,12 @@ public class July {
         }
     }
 
+    /**
+     * Main method that serves as the entry point for the July application.
+     * Creates a new July instance with a default storage file and starts the application.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         new July("data/savefile.txt").run();
     }
