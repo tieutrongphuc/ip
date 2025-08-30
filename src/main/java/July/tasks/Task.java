@@ -73,4 +73,8 @@ public class Task {
     public boolean check(StringTime o) {
         return false;
     }
+
+    public boolean checkDescription(String s) {
+        return description.contains(s);
+    }
 }

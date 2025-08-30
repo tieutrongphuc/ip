@@ -13,7 +13,8 @@ public enum keywords {
     DEADLINE("deadline"),
     EVENT("event"),
     DELETE("delete"),
-    CHECK("check");
+    CHECK("check"),
+    FIND("find");
 
     private final String keyword;
 
