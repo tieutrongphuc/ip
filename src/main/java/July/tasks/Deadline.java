@@ -78,7 +78,7 @@ public class Deadline extends Task {
         if (by.isString() || o.isString()) {
             return false;
         }
-        return by.compareTo(o) >= 0;
+        return by.compareTo(o) >= 0 && !super.isDone;
     }
 
 }
