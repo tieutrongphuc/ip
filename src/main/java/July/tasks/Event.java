@@ -39,6 +39,6 @@ public class Event extends Task {
         if (from.isString() || to.isString() || o.isString()) {
             return false;
         }
-        return from.compareTo(o) < 0 && to.compareTo(o) > 0;
+        return from.compareTo(o) < 0 && to.compareTo(o) > 0 && !super.isDone;
     }
 }
