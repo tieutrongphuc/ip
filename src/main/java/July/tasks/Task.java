@@ -27,7 +27,12 @@ public class Task {
     public String toSave() {
         return "";
     }
+
     public boolean check(StringTime o) {
         return false;
+    }
+
+    public boolean checkDescription(String s) {
+        return description.contains(s);
     }
 }
