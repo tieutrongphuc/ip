@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-import July.command.CommandRoute;
-import July.error.JulyException;
-import July.data.Storage;
-import July.tasks.Task;
-import July.ui.Ui;
-import July.command.Command;
+import july.command.Command;
+import july.command.CommandRoute;
+import july.data.Storage;
+import july.error.JulyException;
+import july.tasks.Task;
+import july.ui.Ui;
 
 /**
  * Main class for the July task management application.
@@ -13,9 +13,9 @@ import July.command.Command;
  * the user interface, command processing, task management, and data storage components.
  */
 public class July {
-    private Storage storage;
-    private ArrayList<Task> tasks;
-    private Ui ui;
+    private final Storage storage;
+    private final ArrayList<Task> tasks;
+    private final Ui ui;
 
     /**
      * Constructs a July application instance with the specified storage file path.

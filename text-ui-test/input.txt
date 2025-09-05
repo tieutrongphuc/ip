@@ -1,5 +1,5 @@
 todo buy milk
-deadline return book /by July 5th
+deadline return book /by july 5th
 event cs2100 class /from 3pm /to 5pm
 mark 1
 mark 2
