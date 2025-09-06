@@ -24,9 +24,12 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) {
-        System.out.printf("You currently have %d task in your list%n", tasks.size());
+        ArrayList<String> taskStrings = new ArrayList<>();
+        taskStrings.add(String.format("You currently have %d task in your list%n", tasks.size()));
+
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d.%s%n", i + 1, tasks.get(i));
+            taskStrings.add(String.format("%d.%s", i + 1, tasks.get(i)));
         }
+        addResponses(taskStrings.toArray(new String[0]));
     }
 }

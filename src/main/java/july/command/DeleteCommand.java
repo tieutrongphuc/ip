@@ -21,6 +21,7 @@ public class DeleteCommand extends Command {
      * @param argument the string representing the task number to delete
      */
     public DeleteCommand(String argument) {
+        super();
         this.argument = argument;
     }
 
@@ -38,14 +39,19 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
         try {
-            int i = Integer.parseInt(argument);
-            if (i <= 0 || i > tasks.size()) {
-                throw new JulyException("You are giving me an invalid task number: " + argument);
-            } else {
-                System.out.printf("I've deleted task %d:%n%s%n", i, tasks.get(i - 1));
-                tasks.remove(i - 1);
-                System.out.printf("You have now %d remaining tasks%n", tasks.size());
+            int index = Integer.parseInt(argument) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                throw new JulyException("Invalid task number: " + (index + 1));
             }
+            Task deleted = tasks.remove(index);
+            storage.save(tasks);
+
+            addResponses(
+                "I've removed this task:",
+                "  " + deleted.toString(),
+                String.format("Now you have %d %s in the list.",
+                    tasks.size(), tasks.size() == 1 ? "task" : "tasks")
+            );
         } catch (NumberFormatException e) {
             throw new JulyException("Sorry " + argument + " is not a valid number");
         }

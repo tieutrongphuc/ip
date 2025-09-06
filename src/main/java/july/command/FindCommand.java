@@ -14,6 +14,7 @@ import july.ui.Ui;
 public class FindCommand extends Command {
     private final String argument;
     public FindCommand(String s) {
+        super();
         this.argument = s;
     }
 
@@ -39,13 +40,16 @@ public class FindCommand extends Command {
                 cnt.add(i + 1);
             }
         }
+
         if (!save.isEmpty()) {
-            System.out.println("Here are the matching tasks in your list:");
+            ArrayList<String> responses = new ArrayList<>();
+            responses.add("Here are the matching tasks in your list:");
             for (int i = 0; i < save.size(); i++) {
-                System.out.printf("%d.%s%n", cnt.get(i), save.get(i));
+                responses.add(String.format("%d.%s", cnt.get(i), save.get(i)));
             }
+            addResponses(responses.toArray(new String[0]));
         } else {
-            System.out.println("There are no match tasks in your list :<");
+            addResponses("There are no match tasks in your list :<");
         }
     }
 }

@@ -1,3 +1,5 @@
+package july;
+
 import java.util.ArrayList;
 
 import july.command.Command;
@@ -48,6 +50,16 @@ public class July {
             } catch (JulyException e) {
                 ui.showError(e.getMessage());
             }
+        }
+    }
+
+    public String getResponse(String input) {
+        try {
+            Command c = CommandRoute.parse(input);
+            c.execute(tasks, ui, storage);
+            return c.getResponse();
+        } catch (JulyException e) {
+            return e.getMessage();
         }
     }
 

@@ -47,9 +47,9 @@ public class MarkCommand extends Command {
             } else {
                 tasks.get(i - 1).setDone(markAsDone);
                 if (markAsDone) {
-                    System.out.printf("Okie no problem, I've set task %d to done:%n%s%n", i, tasks.get(i - 1));
+                    addResponses(String.format("Okie no problem, I've set task %d to done:%n%s", i, tasks.get(i - 1)));
                 } else {
-                    System.out.printf("Okie no problem, I've set task %d to not done yet:%n%s%n", i, tasks.get(i - 1));
+                    addResponses(String.format("Okie no problem, I've set task %d to not done yet:%n%s", i, tasks.get(i - 1)));
                 }
             }
         } catch (NumberFormatException e) {

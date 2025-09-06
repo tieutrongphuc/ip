@@ -13,7 +13,9 @@ import july.ui.Ui;
  * error message through the user interface.
  */
 public class UnknownCommand extends Command {
-
+    public UnknownCommand() {
+        super();
+    }
     /**
      * Executes the unknown command to display an error message for unrecognized input.
      * This method calls the user interface to show a sorry/error message when
@@ -25,6 +27,6 @@ public class UnknownCommand extends Command {
      */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) {
-        ui.sorry();
+        super.addResponses(ui.sorry());
     }
 }
