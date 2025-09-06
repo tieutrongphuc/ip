@@ -46,7 +46,7 @@ public class MainWindow extends AnchorPane {
         String response = july.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getJulyDialog(response, dukeImage)
         );
         userInput.clear();
     }

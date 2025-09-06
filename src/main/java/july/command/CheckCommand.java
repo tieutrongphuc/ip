@@ -49,7 +49,7 @@ public class CheckCommand extends Command {
                 responses.add(task.toString());
             }
         }
-
+        
         addResponses(responses.toArray(new String[0]));
     }
 }

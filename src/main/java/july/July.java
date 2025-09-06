@@ -37,6 +37,7 @@ public class July {
      * until an exit command is received. Handles exceptions by displaying
      * error messages to the user.
      */
+
     public void run() {
         ui.greet();
         boolean isDone = false;
@@ -69,6 +70,7 @@ public class July {
      *
      * @param args command line arguments (not used)
      */
+
     public static void main(String[] args) {
         new July("data/savefile.txt").run();
     }
