@@ -44,14 +44,14 @@ public class Ui {
     /**
      * Displays the farewell message when the user exits the application.
      */
-    public void bye() {
-        System.out.println("Good bye, I'm always here for you.");
+    public String bye() {
+        return "Good bye, I'm always here for you.";
     }
 
     /**
      * Displays an apology message for unrecognized user input.
      */
-    public void sorry() {
-        System.out.println("Sorry I don't quite understand you :(");
+    public String sorry() {
+        return "Sorry I don't quite understand you :(";
     }
 }

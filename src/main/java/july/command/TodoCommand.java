@@ -21,6 +21,7 @@ public class TodoCommand extends Command {
      * @param description the description text for the new todo task
      */
     public TodoCommand(String description) {
+        super();
         this.description = description;
     }
 
@@ -35,7 +36,13 @@ public class TodoCommand extends Command {
      */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) {
-        tasks.add(new Todo(description));
-        System.out.printf("Okie no problem, I've add the given task:%n%s%n", tasks.get(tasks.size() - 1));
+        Todo todo = new Todo(description);
+        tasks.add(todo);
+        storage.save(tasks);
+
+        addResponses(
+            "Got it. I've added this todo:", "  " + todo.toString(),
+            String.format("Now you have %d %s in the list.", tasks.size(), tasks.size() == 1 ? "task" : "tasks")
+        );
     }
 }

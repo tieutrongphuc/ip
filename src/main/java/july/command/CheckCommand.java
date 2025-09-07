@@ -41,12 +41,15 @@ public class CheckCommand extends Command {
             throw new JulyException("Please give a valid date: example dd/mm/yyyy");
         }
 
-        System.out.printf("Okay let me check if you have any task not done yet on %s%n", temp);
+        ArrayList<String> responses = new ArrayList<>();
+        responses.add(String.format("Okay let me check if you have any task not done yet on %s", temp));
 
         for (Task task : tasks) {
             if (task.check(temp)) {
-                System.out.println(task);
+                responses.add(task.toString());
             }
         }
+        
+        addResponses(responses.toArray(new String[0]));
     }
 }

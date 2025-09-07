@@ -1,3 +1,5 @@
+package july;
+
 import java.util.ArrayList;
 
 import july.command.Command;
@@ -16,6 +18,7 @@ public class July {
     private final Storage storage;
     private final ArrayList<Task> tasks;
     private final Ui ui;
+    private boolean shouldExit = false;
 
     /**
      * Constructs a July application instance with the specified storage file path.
@@ -35,6 +38,7 @@ public class July {
      * until an exit command is received. Handles exceptions by displaying
      * error messages to the user.
      */
+
     public void run() {
         ui.greet();
         boolean isDone = false;
@@ -51,12 +55,28 @@ public class July {
         }
     }
 
+    public String getResponse(String input) {
+        try {
+            Command c = CommandRoute.parse(input);
+            c.execute(tasks, ui, storage);
+            shouldExit = c.isDone();
+            return c.getResponse();
+        } catch (JulyException e) {
+            return e.getMessage();
+        }
+    }
+
+    public boolean shouldExit() {
+        return shouldExit;
+    }
+
     /**
      * Main method that serves as the entry point for the July application.
      * Creates a new July instance with a default storage file and starts the application.
      *
      * @param args command line arguments (not used)
      */
+
     public static void main(String[] args) {
         new July("data/savefile.txt").run();
     }

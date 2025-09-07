@@ -23,6 +23,7 @@ public class DeadlineCommand extends Command {
      * @param argument the string containing the deadline task description and due date
      */
     public DeadlineCommand(String argument) {
+        super();
         this.argument = argument;
     }
 
@@ -38,12 +39,18 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
-        try {
-            Deadline tmp = Deadline.process(argument);
-            tasks.add(tmp);
-            System.out.printf("Okie no problem, I've added a new deadline:%n%s%n", tasks.get(tasks.size() - 1));
-        } catch (InvalidDeadlineException e) {
-            throw new JulyException(e.getMessage());
-        }
+       try {
+           Deadline deadline = Deadline.process(argument);
+           tasks.add(deadline);
+           storage.save(tasks);
+           addResponses(
+                   "Got it. I've added this deadline:",
+                   "  " + deadline.toString(),
+                   String.format("Now you have %d %s in the list.",
+                           tasks.size(), tasks.size() == 1 ? "task" : "tasks")
+           );
+       } catch (InvalidDeadlineException e) {
+           throw new JulyException(e.getMessage());
+       }
     }
 }

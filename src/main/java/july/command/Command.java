@@ -1,6 +1,8 @@
 package july.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import july.data.Storage;
 import july.error.JulyException;
@@ -12,25 +14,55 @@ import july.ui.Ui;
  * Provides the interface for executing commands and checking for termination.
  */
 public abstract class Command {
+    protected List<String> responses;
+
+    public Command() {
+        this.responses = new ArrayList<>();
+    }
+
     /**
-     * Executes the event command to create and add a new event task.
-     * Processes the argument to create an Event object, adds it to the task list,
-     * and displays a confirmation message to the user.
+     * Executes the command with the given tasks, UI, and storage.
      *
-     * @param tasks the ArrayList of tasks to add the new event to
-     * @param ui the user interface component for displaying output
-     * @param storage the storage component for data persistence
-     * @throws JulyException there is any error in the execute process
+     * @param tasks the ArrayList of tasks
+     * @param ui the user interface component
+     * @param storage the storage component
+     * @throws JulyException if there is an error executing the command
      */
     public abstract void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException;
 
     /**
-     * Indicates whether the command represents a termination request.
-     * This method is set to false by default
+     * Checks if the command should terminate the program.
      *
-     * @return false, indicating that the application should continue
+     * @return true if the program should terminate, false otherwise
      */
     public boolean isDone() {
         return false;
+    }
+
+    /**
+     * Adds one or more response messages to the command's response list.
+     *
+     * @param messages The messages to add to the response
+     */
+    protected void addResponses(String... messages) {
+        responses.addAll(Arrays.asList(messages));
+    }
+
+    /**
+     * Gets all responses accumulated during command execution.
+     *
+     * @return List of response messages
+     */
+    public List<String> getResponses() {
+        return responses;
+    }
+
+    /**
+     * Gets a single concatenated response string, joining multiple responses with newlines.
+     *
+     * @return Combined response string
+     */
+    public String getResponse() {
+        return String.join("\n", responses);
     }
 }
