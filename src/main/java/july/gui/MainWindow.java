@@ -29,6 +29,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        String greeting = "Hello I'm July, your helpful assistant";
+        dialogContainer.getChildren().add(
+            DialogBox.getJulyDialog(greeting, dukeImage)
+        );
     }
 
     /** Injects the July instance */
@@ -49,5 +53,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getJulyDialog(response, dukeImage)
         );
         userInput.clear();
+
+        if (july.shouldExit()) {
+            javafx.application.Platform.exit();
+        }
     }
 }

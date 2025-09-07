@@ -18,6 +18,7 @@ public class July {
     private final Storage storage;
     private final ArrayList<Task> tasks;
     private final Ui ui;
+    private boolean shouldExit = false;
 
     /**
      * Constructs a July application instance with the specified storage file path.
@@ -58,10 +59,15 @@ public class July {
         try {
             Command c = CommandRoute.parse(input);
             c.execute(tasks, ui, storage);
+            shouldExit = c.isDone();
             return c.getResponse();
         } catch (JulyException e) {
             return e.getMessage();
         }
+    }
+
+    public boolean shouldExit() {
+        return shouldExit;
     }
 
     /**
