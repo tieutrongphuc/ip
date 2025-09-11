@@ -22,6 +22,8 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) {
         super(description);
+        assert from != null : "Event start time cannot be null";
+        assert to != null : "Event end time cannot be null";
         this.from = new StringTime(from);
         this.to = new StringTime(to);
     }
@@ -36,6 +38,7 @@ public class Event extends Task {
      * @throws InvalidEventException if the argument doesn't contain exactly one "/from" and one "/to" separator
      */
     public static Event process(String argument) throws InvalidEventException {
+        assert argument != null : "Argument cannot be null";
         String[] tmp = argument.split("/to", 2);
         String to = tmp[1].trim();
         String[] tmp1 = tmp[0].trim().split("/from", 2);
@@ -44,6 +47,9 @@ public class Event extends Task {
         }
         String from = tmp1[1].trim();
         String description = tmp1[0].trim();
+        assert !description.isEmpty() : "Description cannot be empty";
+        assert !from.isEmpty() : "Start time cannot be empty";
+        assert !to.isEmpty() : "End time cannot be empty";
         return new Event(description, from, to);
     }
 
