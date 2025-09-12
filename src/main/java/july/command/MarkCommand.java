@@ -44,13 +44,12 @@ public class MarkCommand extends Command {
             int i = Integer.parseInt(argument);
             if (i <= 0 || i > tasks.size()) {
                 throw new JulyException("You are giving me an invalid task number: " + argument);
+            }
+            tasks.get(i - 1).setDone(markAsDone);
+            if (markAsDone) {
+                addResponses(String.format("Okie no problem, I've set task %d to done:%n%s", i, tasks.get(i - 1)));
             } else {
-                tasks.get(i - 1).setDone(markAsDone);
-                if (markAsDone) {
-                    addResponses(String.format("Okie no problem, I've set task %d to done:%n%s", i, tasks.get(i - 1)));
-                } else {
-                    addResponses(String.format("Okie no problem, I've set task %d to not done yet:%n%s", i, tasks.get(i - 1)));
-                }
+                addResponses(String.format("Okie no problem, I've set task %d to not done yet:%n%s", i, tasks.get(i - 1)));
             }
         } catch (NumberFormatException e) {
             throw new JulyException("Sorry " + argument + " is not a valid number");
