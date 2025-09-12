@@ -22,6 +22,8 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) {
         super(description);
+        assert from != null : "Event start time cannot be null";
+        assert to != null : "Event end time cannot be null";
         this.from = new StringTime(from);
         this.to = new StringTime(to);
     }
@@ -47,6 +49,9 @@ public class Event extends Task {
         String from = fromSplit[1].trim();
         String description = fromSplit[0].trim();
 
+        assert !description.isEmpty() : "Description cannot be empty";
+        assert !from.isEmpty() : "Start time cannot be empty";
+        assert !to.isEmpty() : "End time cannot be empty";
         return new Event(description, from, to);
     }
 
