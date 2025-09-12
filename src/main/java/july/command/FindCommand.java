@@ -1,6 +1,8 @@
 package july.command;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import july.data.Storage;
 import july.error.JulyException;
@@ -32,14 +34,14 @@ public class FindCommand extends Command {
             throw new JulyException("I can only find a String data :<");
         }
 
-        ArrayList<Task> save = new ArrayList<>();
-        ArrayList<Integer> cnt = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).checkDescription(argument)) {
-                save.add(tasks.get(i));
-                cnt.add(i + 1);
-            }
-        }
+        ArrayList<Task> save = tasks.stream()
+                .filter(t -> t.checkDescription(argument))
+                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Integer> cnt = IntStream.range(0, tasks.size())
+                .filter(i -> tasks.get(i).checkDescription(argument))
+                .map(i -> i + 1)
+                .boxed()
+                .collect(Collectors.toCollection(ArrayList::new));
 
         if (!save.isEmpty()) {
             ArrayList<String> responses = new ArrayList<>();
