@@ -27,6 +27,7 @@ public class July {
      * @param filePath the path to the file used for storing task data
      */
     public July(String filePath) {
+        assert filePath != null : "File path cannot be null";
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = storage.load();
@@ -40,6 +41,7 @@ public class July {
      *         or an error message if the command processing fails
      */
     public String getResponse(String input) {
+        assert input != null : "Input cannot be null";
         try {
             Command c = CommandRoute.parse(input);
             c.execute(tasks, ui, storage);

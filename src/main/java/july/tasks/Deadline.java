@@ -20,6 +20,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
+        assert by != null : "Deadline time cannot be null";
         this.by = new StringTime(by);
     }
 
@@ -33,12 +34,15 @@ public class Deadline extends Task {
      * @throws InvalidDeadlineException if the argument doesn't contain exactly one "/by" separator
      */
     public static Deadline process(String argument) throws InvalidDeadlineException {
+        assert argument != null : "Argument cannot be null";
         String[] tmp = argument.split("/by", 2);
         if (tmp.length != 2) {
             throw new InvalidDeadlineException("You need to have ONE '/by' in deadline command");
         }
         String description = tmp[0].trim();
         String by = tmp[1].trim();
+        assert !description.isEmpty() : "Description cannot be empty";
+        assert !by.isEmpty() : "Deadline time cannot be empty";
         return new Deadline(description, by);
     }
 
