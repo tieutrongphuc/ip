@@ -96,26 +96,28 @@ public class Storage {
         try {
             String[] argument = line.split("\\s+", 3);
             String keyword = argument[0].trim();
-            String isDone = argument[1].trim();
+            boolean isDone = argument[1].trim().equals("1");
             String description = argument[2].trim();
 
             switch (keyword) {
             case "T":
-                return new Todo(description);
+                Task todoTask = new Todo(description);
+                todoTask.setDone(isDone);
+                return todoTask;
             case "D":
                 try {
-                    Task tmp = Deadline.process(description);
-                    tmp.setDone(isDone.equals("1"));
-                    return tmp;
+                    Task deadlineTask = Deadline.process(description);
+                    deadlineTask.setDone(isDone);
+                    return deadlineTask;
                 } catch (InvalidDeadlineException e) {
                     System.out.println("Error reading Deadline task");
                 }
                 break;
             case "E":
                 try {
-                    Task tmp = Event.process(description);
-                    tmp.setDone(isDone.equals("1"));
-                    return tmp;
+                    Task eventTask = Event.process(description);
+                    eventTask.setDone(isDone);
+                    return eventTask;
                 } catch (InvalidEventException e) {
                     System.out.println("Error reading Event task");
                 }
