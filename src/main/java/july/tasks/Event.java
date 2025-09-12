@@ -36,14 +36,17 @@ public class Event extends Task {
      * @throws InvalidEventException if the argument doesn't contain exactly one "/from" and one "/to" separator
      */
     public static Event process(String argument) throws InvalidEventException {
-        String[] tmp = argument.split("/to", 2);
-        String to = tmp[1].trim();
-        String[] tmp1 = tmp[0].trim().split("/from", 2);
-        if (tmp.length != 2 || tmp1.length != 2) {
+        if (!argument.contains("/from") || !argument.contains("/to")) {
             throw new InvalidEventException("You need ONE '/from' and ONE '/to' for the event command");
         }
-        String from = tmp1[1].trim();
-        String description = tmp1[0].trim();
+
+        String[] toSplit = argument.split("/to", 2);
+        String to = toSplit[1].trim();
+
+        String[] fromSplit = toSplit[0].split("/from", 2);
+        String from = fromSplit[1].trim();
+        String description = fromSplit[0].trim();
+
         return new Event(description, from, to);
     }
 
