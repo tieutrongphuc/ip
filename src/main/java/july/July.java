@@ -34,33 +34,18 @@ public class July {
     }
 
     /**
-     * Runs the main application loop.
-     * Displays the greeting message and continuously processes user commands
-     * until an exit command is received. Handles exceptions by displaying
-     * error messages to the user.
+     * Processes a user input command and returns the corresponding response.
+     *
+     * @param input the user input string to be processed
+     * @return a string response indicating the result of the command execution
+     *         or an error message if the command processing fails
      */
-
-    public void run() {
-        ui.greet();
-        boolean isDone = false;
-
-        while (!isDone) {
-            try {
-                String fullCommand = ui.read();
-                Command c = CommandRoute.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isDone = c.isDone();
-            } catch (JulyException e) {
-                ui.showError(e.getMessage());
-            }
-        }
-    }
-
     public String getResponse(String input) {
         assert input != null : "Input cannot be null";
         try {
             Command c = CommandRoute.parse(input);
             c.execute(tasks, ui, storage);
+            storage.save(tasks);
             shouldExit = c.isDone();
             return c.getResponse();
         } catch (JulyException e) {
@@ -80,6 +65,6 @@ public class July {
      */
 
     public static void main(String[] args) {
-        new July("data/savefile.txt").run();
+        new July("data/savefile.txt");
     }
 }

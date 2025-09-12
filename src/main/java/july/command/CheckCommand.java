@@ -36,16 +36,16 @@ public class CheckCommand extends Command {
      */
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
-        StringTime temp = new StringTime(argument);
-        if (temp.isString()) {
+        StringTime parsedDate = new StringTime(argument);
+        if (parsedDate.isString()) {
             throw new JulyException("Please give a valid date: example dd/mm/yyyy");
         }
 
         ArrayList<String> responses = new ArrayList<>();
-        responses.add(String.format("Okay let me check if you have any task not done yet on %s", temp));
+        responses.add(String.format("Okay let me check if you have any task not done yet on %s", parsedDate));
 
         for (Task task : tasks) {
-            if (task.check(temp)) {
+            if (task.check(parsedDate)) {
                 responses.add(task.toString());
             }
         }
