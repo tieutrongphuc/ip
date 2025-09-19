@@ -23,7 +23,7 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    private DialogBox(String text, Image img) {
+    private DialogBox(String text, Image img, boolean isUser) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -35,6 +35,22 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+
+        // Apply different style classes for user vs July dialogs
+        if (isUser) {
+            dialog.getParent().getStyleClass().add("user-dialog-box");
+        } else {
+            dialog.getParent().getStyleClass().add("july-dialog-box");
+        }
+
+        // I use GPT to help me which command to make round picture
+        double radius = Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) * 0.5;
+        javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(
+                displayPicture.getFitWidth() / 2,
+                displayPicture.getFitHeight() / 2,
+                radius
+        );
+        displayPicture.setClip(clip);
     }
 
     /**
@@ -48,11 +64,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        return new DialogBox(text, img, true);
     }
 
     public static DialogBox getJulyDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+        var db = new DialogBox(text, img, false);
         db.flip();
         return db;
     }
