@@ -13,6 +13,7 @@ import july.tasks.Deadline;
 import july.tasks.Event;
 import july.tasks.Task;
 import july.tasks.Todo;
+import july.tasks.Fix;
 
 /**
  * Write and red data to and from the file system.
@@ -120,6 +121,15 @@ public class Storage {
                     return eventTask;
                 } catch (InvalidEventException e) {
                     System.out.println("Error reading Event task");
+                }
+                break;
+            case "F":
+                try {
+                    Task fixTask = Fix.process(description);
+                    fixTask.setDone(isDone);
+                    return fixTask;
+                } catch (Exception e) {
+                    System.out.println("Error reading Fix task");
                 }
                 break;
             default:

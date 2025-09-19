@@ -45,6 +45,7 @@ public class CommandRoute {
         case "event" -> new EventCommand(argument);
         case "delete" -> new DeleteCommand(argument);
         case "find" -> new FindCommand(argument);
+        case "fix" -> new FixCommand(argument);
         default -> new UnknownCommand();
         };
     }

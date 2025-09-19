@@ -14,7 +14,9 @@ public enum Keywords {
     EVENT("event"),
     DELETE("delete"),
     CHECK("check"),
-    FIND("find");
+    FIND("find"),
+    FIX("fix");
+
 
     private final String keyword;
 
