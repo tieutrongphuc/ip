@@ -12,7 +12,9 @@ July is a cute chatbot that helps you manage tasks through simple chat commands.
 - **[D]** Deadline - Tasks with due dates
 - **[E]** Event - Tasks with time slots
 - **[F]** Fix - Tasks with time estimates
+
 ## Commands 💬
+
 ### Basic Tasks
 ```
 todo read book                    → Simple task
