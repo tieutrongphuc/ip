@@ -37,7 +37,7 @@ public class CheckCommand extends Command {
     @Override
     public void execute(ArrayList<Task> tasks, Ui ui, Storage storage) throws JulyException {
         StringTime parsedDate = new StringTime(argument);
-        if (parsedDate.isString()) {
+        if (parsedDate.isString() || parsedDate.isTimeOnly()) {
             throw new JulyException("Please give a valid date: example dd/mm/yyyy");
         }
 
