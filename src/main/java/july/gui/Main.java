@@ -25,6 +25,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             // Add theme CSS
             scene.getStylesheets().add(Main.class.getResource("/view/theme.css").toExternalForm());
+            stage.setTitle("July");
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setJuly(july);  // inject the July instance
             stage.show();

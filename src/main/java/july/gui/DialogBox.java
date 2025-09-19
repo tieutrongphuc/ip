@@ -35,14 +35,14 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-
+        
         // Apply different style classes for user vs July dialogs
         if (isUser) {
             dialog.getParent().getStyleClass().add("user-dialog-box");
         } else {
             dialog.getParent().getStyleClass().add("july-dialog-box");
         }
-
+        
         // I use GPT to help me which command to make round picture
         double radius = Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) * 0.5;
         javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(
